@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Calculator</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: grid;
+            place-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #calculator {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 10px;
+            max-width: 400px;
+        }
+
+        #result {
+            grid-column: span 4;
+            text-align: right;
+            padding: 10px;
+            background-color: #f4f4f4;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 15px;
+            font-size: 1em;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            background-color: #fff;
+        }
+
+        button.operator {
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        button.double {
+            grid-column: span 2;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="calculator">
+        <div id="result"></div>
+        <button>7</button>
+        <button>8</button>
+        <button>9</button>
+        <button class="operator">/</button>
+        <button>4</button>
+        <button>5</button>
+        <button>6</button>
+        <button class="operator">*</button>
+        <button>1</button>
+        <button>2</button>
+        <button>3</button>
+        <button class="operator">-</button>
+        <button class="double">0</button>
+        <button>.</button>
+        <button class="operator">+</button>
+        <button class="double operator">=</button>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const result = document.getElementById("result");
+            const buttons = document.querySelectorAll("button");
+            let currentInput = "";
+            let operator = "";
+
+            buttons.forEach(button => {
+                button.addEventListener("click", function() {
+                    const buttonText = button.textContent;
+
+                    if (!isNaN(buttonText) || buttonText === ".") {
+                        currentInput += buttonText;
+                    } else if (buttonText === "C") {
+                        currentInput = "";
+                        operator = "";
+                    } else if (buttonText === "=") {
+                        if (currentInput && operator) {
+                            currentInput = eval(currentInput);
+                            operator = "";
+                        }
+                    } else {
+                        operator = buttonText;
+                        currentInput += operator;
+                    }
+
+                    result.textContent = currentInput;
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
